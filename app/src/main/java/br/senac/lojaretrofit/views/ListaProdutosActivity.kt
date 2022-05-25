@@ -15,6 +15,7 @@ import retrofit2.Response
 
 
 class ListaProdutosActivity : AppCompatActivity() {
+
     lateinit var binding: ActivityListaProdutosBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,6 +33,7 @@ class ListaProdutosActivity : AppCompatActivity() {
         val callback  =  object : Callback<List<Produto>> {
             override fun onResponse(call: Call<List<Produto>>, response: Response<List<Produto>>) {
                 if (response.isSuccessful){
+                    response.headers()
                     val listaProdutos = response.body()
                     atualizarTela(listaProdutos)
                 } else {
@@ -47,6 +49,8 @@ class ListaProdutosActivity : AppCompatActivity() {
                 binding.progressBar.visibility = View.INVISIBLE
             }
         }
+
+
 
         API.produto.listar().enqueue(callback)
         binding.progressBar.visibility = View.VISIBLE
